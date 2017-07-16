@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'course_app/style.css' %}">
+    <title>Add a student to all bootcamp courses</title>
+</head>
+<body>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/add" method="post">
+        {% csrf_token %}
+        <h1>Add a new Course</h1>
+        <label class="block_up">Name: 
+            <input type="text" name="name">
+        </label>
+        <label class="block_up"> Description: 
+            <textarea class="block_up" name="desc" id="" cols="30" rows="10"></textarea>
+        </label>
+        <input type="submit" value="Add">
+    </form>
+
+    <table>
+        <tr>
+            <th>Course Name</th>
+            <th>Description</th> 
+            <th>Date Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for course,description in course_desc %}
+        <tr>
+            <td>{{course.name}}</td>
+            <td>{{description.desc}}</td> 
+            <td>{{course.created_at}}</td> 
+            <td>
+                <a href="/destroy/{{course.id}}">remove</a>
+                <a href="/comments/{{course.id}}">add comments</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'course_app/style.css' %}">
+    <title>Course Comments</title>
+</head>
+<body>
+    <a href="/">Go Back</a>
+    <h1>Post a comment</h1>
+    <form action="/{{course_id}}/post" method="post">
+        {% csrf_token %}
+        <label>Comment: 
+            <textarea class="block_up" name="comment" id="" cols="30" rows="10"></textarea>
+        </label>
+        <input type="submit" value="Post">
+    </form>
+    {% for comment in comment_list %}
+    <p>{{comment.content}}</p>
+    <p>{{comment.created_at}}</p>
+    {% endfor %}
+    <a href="/">Go Back</a>
+</body>
+</html>
